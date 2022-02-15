@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="centered">
+  <h1>API Documentation</h1>
+  <p>
+    Welcome to the API documentation for our Wine-o-meter application.
+  </p>
+  <p>
+    This API allows wine producers to predict the quality score of their wine based on physicochemical inputs.
+  </p>
+  <div>
+    <h2>Endpoints</h2>
+    <blockquote>
+      POST /prediction
+    </blockquote>
+    <div>
+      <p>
+        This endpoint allows you to make a prediction of the quality score (from 0 to 10) of multiple wines.
+      </p>
+      <h3>
+        How to request this endpoint?
+      </h3>
+      <p>
+        You should request this endpoint using a POST method with a JSON content. Your JSON should contain at least "input" key with associated value.
+      </p>
+      <p>
+        Example: <code>curl -i -H "Content-Type: application/json" -X POST -d '{"input": [[7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8]]}' http://127.0.0.1:5002/predict</code>
+      </p>
+      <p>
+        It returns a JSON like so:
+        <pre>
+          <code>
+  {
+    "prediction": [6]
+  }
+          </code>
+        </pre>
+      </p>
+      <p>
+        You can take an example of input with several inputs: <code>curl -i -H "Content-Type: application/json" -X POST -d '{"input": [[7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8],
+          [5.0, 0.98, 0.32, 18.9, 0.050, 75.0, 122.0, 0.401, 3.1, 0.21, 1.2]]}' http://127.0.0.1:5002/predict</code>
+      </p>
+      <p>
+        It returns a JSON like so:
+        <pre>
+          <code>
+  {
+    "prediction": [6,5]
+  }
+          </code>
+        </pre>
+      </p>
+
+      <h3>
+        Errors
+      </h3>
+      <p>
+        Our API will return an error with format:
+        <pre>
+          <code>
+  {
+    "code": <i>HTTP status code</i>,
+    "name": <i>name of this error</i>,
+    "description": <i>a short description</i>
+  }
+          </code>
+        </pre>
+      </p>
+      <p>
+        Identified errors:
+        <ul>
+          <li>Missing JSON</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
